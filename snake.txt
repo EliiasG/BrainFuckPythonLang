@@ -1,0 +1,164 @@
+# a list of all positions on the board in a random order
+lst apples 100
+# the board with values representing the tail
+lst tail 100
+# head position
+var head
+var lose
+var i
+var j
+var tmp1
+var tmp2
+var tmp3
+var tmp4
+var inpres
+var curapple
+var curappleidx
+var score
+
+set score /a
+
+# random apple positions
+sto 51 apples 0
+sto 14 apples 1
+sto 50 apples 2
+sto 15 apples 3
+sto 71 apples 4
+sto 41 apples 5
+sto 46 apples 6
+sto 4 apples 7
+sto 26 apples 8
+sto 42 apples 9
+sto 81 apples 10
+sto 2 apples 11
+sto 19 apples 12
+sto 86 apples 13
+sto 5 apples 14
+sto 23 apples 15
+sto 49 apples 16
+sto 6 apples 17
+sto 38 apples 18
+sto 28 apples 19
+sto 93 apples 20
+sto 30 apples 21
+sto 53 apples 22
+sto 43 apples 23
+sto 90 apples 24
+sto 62 apples 25
+sto 57 apples 26
+sto 52 apples 27
+sto 9 apples 28
+sto 8 apples 29
+sto 87 apples 30
+sto 55 apples 31
+sto 48 apples 32
+sto 92 apples 33
+sto 3 apples 34
+sto 7 apples 35
+sto 69 apples 36
+sto 47 apples 37
+sto 84 apples 38
+sto 20 apples 39
+sto 25 apples 40
+sto 1 apples 41
+sto 37 apples 42
+sto 98 apples 43
+sto 44 apples 44
+sto 27 apples 45
+sto 83 apples 46
+sto 88 apples 47
+sto 82 apples 48
+sto 64 apples 49
+sto 95 apples 50
+sto 36 apples 51
+sto 99 apples 52
+sto 94 apples 53
+sto 54 apples 54
+sto 33 apples 55
+sto 56 apples 56
+sto 60 apples 57
+sto 76 apples 58
+sto 80 apples 59
+sto 40 apples 60
+sto 66 apples 61
+sto 32 apples 62
+sto 13 apples 63
+sto 85 apples 64
+sto 97 apples 65
+sto 96 apples 66
+sto 89 apples 67
+sto 59 apples 68
+sto 75 apples 69
+sto 16 apples 70
+sto 63 apples 71
+sto 12 apples 72
+sto 67 apples 73
+sto 78 apples 74
+sto 65 apples 75
+sto 77 apples 76
+sto 29 apples 77
+sto 34 apples 78
+sto 61 apples 79
+sto 35 apples 80
+sto 17 apples 81
+sto 39 apples 82
+sto 58 apples 83
+sto 10 apples 84
+sto 24 apples 85
+sto 22 apples 86
+sto 70 apples 87
+sto 68 apples 88
+sto 79 apples 89
+sto 45 apples 90
+sto 72 apples 91
+sto 11 apples 92
+sto 0 apples 93
+sto 74 apples 94
+sto 31 apples 95
+sto 73 apples 96
+sto 18 apples 97
+sto 21 apples 98
+sto 91 apples 99
+
+ret curapple apples 0
+
+set head 45
+
+loop lose=0  
+    #print board
+        set i 0
+        set j 0
+        loop 100>i
+            # char to draw
+            set tmp1 32
+            ret tmp2 tail i
+            if tmp2>0
+                set tmp1 /+
+            endif
+            if curapple=i
+                set tmp1 35
+            endif
+            if head=i
+                set tmp1 /@
+            endif
+            out tmp1
+            out 32
+            add j 1
+            #newline
+            if j=10
+                out 10
+                set j 0
+            endif
+            add i 1
+        endloop
+        out /t
+        out /u
+        out /r
+        out /n
+        out 10
+    #update apple
+    if curapple=head
+
+    endif
+    set lose 1
+endloop

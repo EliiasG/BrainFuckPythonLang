@@ -251,7 +251,7 @@ def parsenum(v):
         if not c.isnumeric():
             return None
     n = int(v)
-    return n if n >= 0 and n < 8**2 else None
+    return n if n >= 0 and n < 2**8 else None
 
 def comp(program):
     global reg_a
