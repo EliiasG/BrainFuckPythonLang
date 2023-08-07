@@ -1,0 +1,17 @@
+lst list 26
+var i
+var v
+
+loop 26>i
+    set v i
+    add v /a
+    sto v list i
+    add i 1
+endloop
+
+set i 0
+loop 26>i
+    ret v list i
+    out v
+    add i 1
+endloop
