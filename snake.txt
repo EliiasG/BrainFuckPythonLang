@@ -190,12 +190,6 @@ loop lose=0
                 set dir tmp1
             endif
         # move and die
-            # die if tail collision
-                ret tmp1 tail head
-                if tmp1>0
-                    set dir 4
-                    set lose 1
-                endif
             # move tail
                 set tmp1 score
                 add tmp1 2
@@ -248,6 +242,12 @@ loop lose=0
                         set lose 1
                     endif
                     add head 10
+                endif
+            # die if tail collision
+                ret tmp1 tail head
+                if tmp1>0
+                    set dir 4
+                    set lose 1
                 endif
     # update apple
         if curapple=head

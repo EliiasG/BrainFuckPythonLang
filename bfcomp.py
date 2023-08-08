@@ -1,30 +1,59 @@
 import sys
-
 def comp(prgm):
     indent = 0
+    i=0
     compiled = ""
     compiled += "ptr = 0\n"
     compiled += "mem = [0]*30000\n"
+    c1=0
+    c2=0
+    c3=0
+    c4=0
+    li = 0
     for c in prgm:
-        compiled += "    " * indent
-        if c == ".":
-            compiled += "print(chr(mem[ptr]), end=\"\")"
-        if c == ",":
-            compiled += "mem[ptr] = ord(input())"
+        i += 1
+        line = ""
+
         if c == "<":
-            compiled += "ptr -= 1"
+            c1 += 1
         if c == ">":
-            compiled += "ptr += 1"
+            c2 += 1
         if c == "+":
-            compiled += "mem[ptr] += 1"
+            c3 += 1
         if c == "-":
-            compiled += "mem[ptr] -= 1"
+            c4 += 1
+
+        if c != "<" and c1 > 0:
+            line = f"ptr -= {c1}"
+            c1=0
+        if c != ">" and c2 > 0:
+            line = f"ptr += {c2}"
+            c2=0
+        if c != "+" and c3 > 0:
+            line = f"mem[ptr] += {c3}"
+            c3=0
+        if c != "-" and c4 > 0:
+            line = f"mem[ptr] -= {c4}"
+            c4=0
+
+        if line != "":
+            compiled += "    "*li + line + "\n"
+            line = ""
+        
+        if c == ".":
+            line = "print(chr(mem[ptr]), end=\"\")"
+        if c == ",":
+            line = "mem[ptr] = ord(input())"
         if c == "[":
-            compiled += "while mem[ptr] > 0:"
+            line = "while mem[ptr] > 0:"
             indent += 1
         if c == "]":
             indent -= 1
-        compiled += "\n"
+            #line = "#close"
+
+        if line != "":
+            compiled += "    "*li + line + "\n"
+        li = indent
     return compiled
 
 if not len(sys.argv) in range(2, 4):
