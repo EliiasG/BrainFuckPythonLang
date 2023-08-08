@@ -15,8 +15,7 @@ var inpres
 var curapple
 var curappleidx
 var score
-
-set score /a
+var dir
 
 # random apple positions
 sto 51 apples 0
@@ -123,14 +122,16 @@ sto 91 apples 99
 ret curapple apples 0
 
 set head 45
+sto 1 tail 46
+sto 2 tail 47
 
 loop lose=0  
-    #print board
+    # print board
         set i 0
         set j 0
         loop 100>i
             # char to draw
-            set tmp1 32
+            set tmp1 /_
             ret tmp2 tail i
             if tmp2>0
                 set tmp1 /+
@@ -151,14 +152,138 @@ loop lose=0
             endif
             add i 1
         endloop
-        out /t
-        out /u
-        out /r
+    # update snake
+        out /i
         out /n
-        out 10
-    #update apple
-    if curapple=head
-
-    endif
-    set lose 1
+        out /p
+        out /u
+        out /t
+        out /:
+        # collect input and set dir
+            inp inpres
+            set tmp2 1
+            if inpres=/a
+                set tmp1 0
+                if dir=2
+                    set tmp2 0
+                endif
+            endif
+            if inpres=/w
+                set tmp1 1
+                if dir=3
+                    set tmp2 0
+                endif
+            endif
+            if inpres=/d
+                set tmp1 2
+                if dir=0
+                    set tmp2 0
+                endif
+            endif
+            if inpres=/s
+                set tmp1 3
+                if dir=1
+                    set tmp2 0
+                endif
+            endif
+            if tmp2=1
+                set dir tmp1
+            endif
+        # move and die
+            # die if tail collision
+                ret tmp1 tail head
+                if tmp1>0
+                    set dir 4
+                    set lose 1
+                endif
+            # move tail
+                set tmp1 score
+                add tmp1 2
+                set tmp2 0
+                loop 100>tmp2
+                    ret tmp3 tail tmp2
+                    if tmp3>0
+                        add tmp3 1
+                    endif
+                    if tmp3>tmp1
+                        set tmp3 0
+                    endif
+                    sto tmp3 tail tmp2
+                    add tmp2 1
+                endloop
+                sto 1 tail head
+            # x position
+            set tmp1 head
+            # y position
+            set tmp2 0
+            loop tmp1>=10
+                sub tmp1 10
+                add tmp2 1
+            endloop
+            # move head
+                if dir=0
+                    if tmp1=0
+                        set lose 1
+                    endif
+                    if tmp1>0
+                        sub head 1
+                    endif
+                endif
+                if dir=1
+                    if tmp2=0
+                        set lose 1
+                    endif
+                    if tmp2>0
+                        sub head 10
+                    endif
+                endif
+                if dir=2
+                    if tmp1=9
+                        set lose 1
+                    endif
+                    add head 1
+                endif
+                if dir=3
+                    if tmp2=9
+                        set lose 1
+                    endif
+                    add head 10
+                endif
+    # update apple
+        if curapple=head
+            add score 1
+            set tmp1 0
+            loop tmp1=0
+                add curappleidx 1
+                if curappleidx=100
+                    set curappleidx 0
+                endif
+                ret curapple apples curappleidx
+                ret tmp2 tail curapple
+                # if the apple is not blocked then break
+                if tmp2=0
+                    set tmp1 1
+                endif
+            endloop
+        endif
+    
+    out 10
 endloop
+
+out /s
+out /c
+out /o
+out /r
+out /e
+out /:
+out 32
+
+set tmp1 0
+loop score>=10
+    sub score 10
+    add tmp1 1
+endloop
+add score /0
+add tmp1 /0
+out tmp1
+out score
